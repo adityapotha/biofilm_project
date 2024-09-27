@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Webpage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 1.1em;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Select Bacteria Type</h2>
+        <label>
+            <input type="radio" name="option" value="Staphylococcus aureus" onclick="updateSelectedOption(this)"> Staphylococcus aureus
+        </label><br>
+        <label>
+            <input type="radio" name="option" value="Viridans streptococcus" onclick="updateSelectedOption(this)"> Viridans streptococcus
+        </label><br>
+        <label>
+            <input type="radio" name="option" value="Klebsiella pneumoniae" onclick="updateSelectedOption(this)"> Klebsiella pneumoniae
+        </label><br>
+        <label>
+            <input type="radio" name="option" value="Escherichia coli" onclick="updateSelectedOption(this)"> Escherichia coli
+        </label>
+        <p>Selected Bacteria Type: <span id="selectedOption">None</span></p>
+    </div>
+
+    <div class="container">
+        <h2>Adjust Optical Density</h2>
+        <input type="range" id="slider" min="0.5" max="2" step="0.01" value="1" oninput="updateSliderValue(this)">
+        <div>
+            <label>Selected: <span id="sliderValue">1</span></label>
+        </div>
+    </div>
+
+    <div class="container">
+        <button onclick="handleSubmit()">Submit</button>
+        <p id="submitMessage"></p>
+    </div>
+
+    <script>
+        // Function to update selected option
+        function updateSelectedOption(radio) {
+            const selectedOptionLabel = document.getElementById('selectedOption');
+            selectedOptionLabel.textContent = radio.value;
+        }
+
+        // Function to update slider value
+        function updateSliderValue(slider) {
+            const sliderValueLabel = document.getElementById('sliderValue');
+            sliderValueLabel.textContent = slider.value;
+        }
+
+        // Function to handle submit button
+        function handleSubmit() {
+            const submitMessage = document.getElementById('submitMessage');
+            const selectedOption = document.querySelector('input[name="option"]:checked');
+            
+            // Check if an option is selected
+            if (!selectedOption) {
+                submitMessage.textContent = "Error: Please select a bacteria type";
+                submitMessage.className = "error";
+            } else {
+                submitMessage.innerHTML = 'Link to see the 3D model: <a href="index.html" target="_blank">Click here</a>';
+                submitMessage.className = "success";
+            }
+        }
+    </script>
+
+</body>
+</html>
+
