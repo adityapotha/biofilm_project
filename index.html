@@ -70,20 +70,20 @@
             sliderValueLabel.textContent = slider.value;
         }
 
-        // Function to handle submit button
-        function handleSubmit() {
-            const submitMessage = document.getElementById('submitMessage');
-            const selectedOption = document.querySelector('input[name="option"]:checked');
-            
-            // Check if an option is selected
-            if (!selectedOption) {
-                submitMessage.textContent = "Error: Please select a bacteria type";
-                submitMessage.className = "error";
-            } else {
-                submitMessage.innerHTML = 'Link to see the 3D model: <a href="index.html" target="_blank">Click here</a>';
-                submitMessage.className = "success";
-            }
-        }
+ // Function to handle submit button
+function handleSubmit() {
+    const selectedOption = document.querySelector('input[name="option"]:checked');
+    
+    // Check if an option is selected
+    if (!selectedOption) {
+        const submitMessage = document.getElementById('submitMessage');
+        submitMessage.textContent = "Error: Please select a bacteria type";
+        submitMessage.className = "error";
+    } else {
+        // Redirect to download page with progress bar
+        window.location.href = 'download_page.html';
+    }
+}
     </script>
 
 </body>

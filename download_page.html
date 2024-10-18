@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .progress-wrapper {
+            text-align: center;
+            width: 400px; /* Adjust this width as needed */
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .progress-container {
+            width: 100%;
+            background-color: #f3f3f3;
+            border-radius: 20px;
+            height: 30px;
+            margin-top: 20px;
+        }
+        .progress-bar {
+            width: 1%;
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 20px;
+        }
+        .progress-label {
+            margin-top: 10px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-wrapper">
+        <h2>Preparing your download...</h2>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <p class="progress-label" id="progressLabel">Starting download...</p>
+    </div>
+
+    <script>
+        // Function to simulate progress bar
+        function simulateProgressBar() {
+            var elem = document.getElementById("progressBar");
+            var label = document.getElementById("progressLabel");
+            var width = 1;
+            var id = setInterval(frame, 50);  // Adjust the speed of the progress bar here
+
+            function frame() {
+                if (width >= 100) {
+                    clearInterval(id);
+                    label.textContent = "Download starting...";
+                    // Trigger the download of the JSON file
+                    triggerDownload();
+                } else {
+                    width++;
+                    elem.style.width = width + '%';
+                    label.textContent = "Downloading: " + width + "%";
+                }
+            }
+        }
+
+        // Function to trigger the download using a Blob
+        function triggerDownload() {
+            const jsonData = {
+                message: "This is a test JSON file for download.",
+                data: {
+                    example: 123,
+                    status: "success"
+                }
+            };
+
+            // Convert JSON data to a string
+            const jsonString = JSON.stringify(jsonData);
+
+            // Create a Blob from the JSON string
+            const blob = new Blob([jsonString], { type: 'application/json' });
+
+            // Create an invisible link element
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'test.json'; // Set the name of the downloaded file
+            document.body.appendChild(link);
+
+            // Programmatically trigger a click on the link to download the file
+            link.click();
+
+            // Clean up and remove the link element
+            document.body.removeChild(link);
+        }
+
+        // Start the progress bar when the page loads
+        window.onload = simulateProgressBar;
+    </script>
+
+</body>
+</html>
